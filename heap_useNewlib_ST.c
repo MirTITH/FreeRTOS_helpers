@@ -61,6 +61,7 @@
 // =======================================  Configuration  ========================================
 // These configuration symbols could be provided by from build...
 #define STM_VERSION // Replace sane LD symbols with STM CubeMX's poor standard exported LD symbols
+#define configISR_STACK_SIZE_WORDS 0x200
 #define ISR_STACK_LENGTH_BYTES (configISR_STACK_SIZE_WORDS*4) // bytes to reserve for ISR (MSP) stack
 // =======================================  Configuration  ========================================
 // ================================================================================================
@@ -114,7 +115,7 @@
     }
 #endif
 
-register char * stack_ptr asm("sp");
+register char * stack_ptr __asm("sp");
 
 #ifdef STM_VERSION // Use STM CubeMX LD symbols for heap+stack area
     // To avoid modifying STM LD file (and then having CubeMX trash it), use available STM symbols
