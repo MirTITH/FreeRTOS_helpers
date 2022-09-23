@@ -1,3 +1,16 @@
+# FreeRTOS NewLib 可重入内存管理
+
+nadler 提供了内存管理的代码，用于解决 FreeRTOS 使用 NewLib 时的可重入问题。感谢 nadler 提供的这些代码。
+
+我发现nadler 的代码有一些问题，进行了一些小修改。
+
+## 修改内容
+- `register char * stack_ptr asm("sp");`编译报错，修改为 `register char * stack_ptr __asm("sp");`
+- 添加 `configISR_STACK_SIZE_WORDS`
+- 添加`xPortGetMinimumEverFreeHeapSize()`（忽略了 newlib 的 GetMinimumEverFree，因此可能不准确，主要目的是为了使用 freertos CLI，那里面需要用到这个函数）
+
+**以下是原 readme**
+
 # FreeRTOS Helpers
 We see lots of vendors, application developers, and a few consultants, Pontificating and Spewing about how solid their tools and processes and applications are, citing MISRA-compliance and other bullox. If they would shut up for a moment and glance downwards, they'd notice they are wearing no pants and standing in quicksand, in the middle of a swamp and surrounded by crocodiles...   
 ![...](https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Quicksandwarning.JPG/440px-Quicksandwarning.JPG)
